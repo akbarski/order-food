@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { MealItemForm } from "./MealItemForm";
 
@@ -8,9 +7,9 @@ export const MealItem = ({ meal }) => {
       <ListItem>
         <Title>{meal.title}</Title>
         <Description>{meal.description}</Description>
-        <Price>{"$" + meal.price}</Price>
+        <Price>{"$" + meal.price.toFixed(2)}</Price>
       </ListItem>
-      <MealItemForm id={meal.id} />
+      <MealItemForm id={meal.id} meal={meal} />
     </List>
   );
 };

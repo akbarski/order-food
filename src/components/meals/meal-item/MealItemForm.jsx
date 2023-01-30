@@ -1,16 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Button } from "../../UI/Button";
+import { useContext } from "react";
+import { BasketContext } from "../../../store/BasketContext";
 import { ReactComponent as Plus } from "../../assets/icons/System icons.svg";
 
-export const MealItemForm = ({ id }) => {
+export const MealItemForm = ({ meal, id, onSubmit }) => {
+  const [amount, setAmount] = useState(1);
+  const { addToBasket } = useContext(BasketContext);
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    const basketItem = {
+      id: meal.id,
+      title: meal.title,
+      price: meal.price,
+      amount: meal.amount,
+    };
+    addToBasket(basketItem);
+  };
+
+  const amountChangeHandler = (event) => {
+    setAmount(event.target.value);
+  };
+
   return (
-    <Container
-      onSubmit={(e) => {
-        e.preventDefault();
-        alert("Вы заказали питсу");
-      }}
-    >
+    <Container onSubmit={submitHandler}>
       <LabelContainer>
         <StyledLabel htmlFor={id}>Amount</StyledLabel>
         <StyledInput
@@ -19,7 +34,8 @@ export const MealItemForm = ({ id }) => {
           id={id}
           min={0}
           max={5}
-          defaultValue={1}
+          value={amount}
+          onChange={amountChangeHandler}
         />
       </LabelContainer>
       <CounterContainer>

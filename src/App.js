@@ -1,17 +1,24 @@
+import { useState } from "react";
 import "./App.css";
 import { Basket } from "./components/basket/Basket";
 import { Header } from "./components/header/Header";
 import { Meals } from "./components/meals/Meals";
 import { Summary } from "./components/summary/Summary";
+import { BasketProvider } from "./store/BasketContext";
 
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const basketShow = () => {
+    setIsModalOpen((prevState) => !prevState);
+  };
   return (
-    <div className="App">
-      <Header />
+    <BasketProvider>
+      <Header onShowModal={basketShow} />
       <Summary />
       <Meals />
-      <Basket />
-    </div>
+      {isModalOpen && <Basket onClose={basketShow} />}
+    </BasketProvider>
   );
 }
 

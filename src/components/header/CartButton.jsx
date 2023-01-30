@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { ReactComponent as BasketIcon } from "../assets/icons/Component 6/Group.svg";
 
-export const CartButton = ({ count = 0 }) => {
+export const CartButton = ({ count = 0, ...rest }) => {
   return (
-    <StyledBtn>
+    <StyledBtn className="bump" {...rest}>
       <BasketIcon />
       <StyledTitle>Your Cart</StyledTitle>
       <StyledCounter>{count || 0}</StyledCounter>
@@ -24,7 +24,29 @@ const StyledBtn = styled.button`
   display: flex;
   align-items: center;
   gap: 1rem;
-  cursor: -webkit-grab;
+  cursor: pointer;
+
+  &.bump {
+    animation: bump 300ms ease-out;
+  }
+
+  @keyframes bump {
+    0% {
+      transform: scale(1);
+    }
+    10% {
+      transform: scale(0.9);
+    }
+    30% {
+      transform: scale(1.1);
+    }
+    50% {
+      transform: scale(1.15);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 `;
 
 const StyledTitle = styled.p``;
